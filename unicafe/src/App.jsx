@@ -1,5 +1,27 @@
 import { useState } from "react";
 
+// a proper place to define a component
+const Statistics = ({ good, neutral, bad }) => {
+  if (good === 0 && neutral === 0 && bad === 0) {
+    return <div>No feedback given</div>;
+  }
+
+  console.log(good, neutral, bad);
+
+  return (
+    <div>
+      <div>good {good}</div>
+      <div>neutral {neutral}</div>
+      <div>bad {bad}</div>
+      <div>all {good + neutral + bad}</div>
+      <div>
+        average {(good * 1 + neutral * 0 + bad * -1) / (good + neutral + bad)}
+      </div>
+      <div>positive {good / (good + neutral + bad)}</div>
+    </div>
+  );
+};
+
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0);
@@ -10,12 +32,6 @@ const App = () => {
   const handleNeutral = () => setNeutral(neutral + 1);
   const handleBad = () => setBad(bad + 1);
 
-  const all = () => good + neutral + bad;
-
-  const average = () => {
-    return (good * 1 + neutral * 0 + bad * -1) / all();
-  };
-
   return (
     <div>
       <h1>give feedback</h1>
@@ -25,16 +41,7 @@ const App = () => {
         <button onClick={handleBad}>bad</button>
       </div>
       <h1>statistics</h1>
-      <div>
-        <div>good {good}</div>
-        <div>neutral {neutral}</div>
-        <div>bad {bad}</div>
-        <div>all {good + neutral + bad}</div>
-        <div>
-          average {(good * 1 + neutral * 0 + bad * -1) / (good + neutral + bad)}
-        </div>
-        <div>positive {good / (good + neutral + bad)}</div>
-      </div>
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   );
 };
